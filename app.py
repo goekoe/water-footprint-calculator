@@ -3412,7 +3412,189 @@ Created on Mon Jul  7 21:46:58 2025
 # st.markdown("[☕ Buy me a coffee](https://www.buymeacoffee.com/yourprofile)")
 
 
-#ACABA STREAMLITTE PDF CALISACAK MI?
+# #ACABA STREAMLITTE PDF CALISACAK MI? #PDF LOCALDE CALISAN; STREMLITTE CALISMAYAN
+# import streamlit as st
+# import matplotlib.pyplot as plt
+# from fpdf import FPDF
+# import io
+# import tempfile
+
+# st.set_page_config(page_title="Water Footprint Calculator", page_icon="💧", layout="centered")
+
+# st.title("💧 Water Footprint Calculator")
+
+# st.markdown("""
+# Calculate your weekly water consumption based on daily activities.
+# Enter your usage below and click **Calculate** to see your total water use and graphs.
+# """)
+
+# # --- Inputs ---
+# laundry = st.number_input("Laundry loads per week", min_value=0, step=1, format="%d")
+# if laundry > 0:
+#     st.markdown("💧 *Each laundry load uses about 50 liters of water.*")
+
+# dishes = st.number_input("Dishwasher loads per week", min_value=0, step=1, format="%d")
+# if dishes > 0:
+#     st.markdown("💧 *A dishwasher cycle uses roughly 20 liters.*")
+
+# toilet = st.number_input("Toilet uses per day", min_value=0, step=1, format="%d")
+# if toilet > 0:
+#     st.markdown("🚽 *Each toilet flush uses approximately 6 liters of water.*")
+#     st.markdown("🧼 *And hopefully you're washing your hands too 😄 — each hand wash uses around 3 liters.*")
+#     #st.markdown("🧮 *That’s 9 liters per toilet visit (flush + handwashing). Included in the total calculation.*")
+
+# teeth_brush = st.number_input("Teeth brushing times per day", min_value=0, step=1, format="%d")
+# if teeth_brush > 0:
+#     st.markdown("💬 *Don’t leave the tap running while brushing your teeth! (up to 6 liters/min wasted)*")
+
+# shower_times = st.number_input("Showers per week", min_value=0, step=1, format="%d")
+# shower_avg = st.number_input("Average shower duration (minutes)", min_value=0, step=1, format="%d")  # Tam sayı yapıldı
+# if shower_times > 0 and shower_avg > 0:
+#     st.markdown("💧 *Showers consume ~9 liters per minute on average.*")
+
+# calculate_button = st.button("Calculate")
+
+# if calculate_button:
+#     # Constants
+#     laundry_per_load = 50
+#     dishes_per_load = 20
+#     toilet_per_use = 6
+#     handwash_per_use = 3
+#     teeth_brush_per_minute = 6
+#     shower_per_minute = 9
+
+#     # Calculations
+#     laundry_total = laundry * laundry_per_load
+#     dishes_total = dishes * dishes_per_load
+#     toilet_total = toilet * 7 * (toilet_per_use + handwash_per_use)  # Güncellendi
+#     teeth_total = teeth_brush * 7 * 2 * teeth_brush_per_minute
+#     shower_total = shower_times * shower_avg * shower_per_minute
+
+#     total_water = laundry_total + dishes_total + toilet_total + teeth_total + shower_total
+
+#     st.subheader("💦 Your weekly water consumption:")
+#     st.write(f"**{total_water:.2f} liters**")
+
+#     labels = ['Laundry', 'Dishwasher', 'Toilet visit (flush + handwashing)', 'Teeth brushing', 'Shower']
+#     values = [laundry_total, dishes_total, toilet_total, teeth_total, shower_total]
+
+#     # Remove zero values for pie chart
+#     filtered_labels = []
+#     filtered_values = []
+#     for lbl, val in zip(labels, values):
+#         if val > 0:
+#             filtered_labels.append(lbl)
+#             filtered_values.append(val)
+
+#     fig, ax = plt.subplots(figsize=(8, 5))
+
+#     if sum(filtered_values) == 0:
+#         st.warning("No water consumption data to show in Pie Chart.")
+#     else:
+#         wedges, texts, autotexts = ax.pie(filtered_values, labels=filtered_labels, autopct='%1.1f%%', startangle=140)
+#         for autotext in autotexts:
+#             autotext.set_color('white')
+#         ax.set_title("Weekly Water Consumption Breakdown")
+
+#     st.pyplot(fig)
+
+#     # Save plot image for PDF using a temporary file
+#     with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmpfile:
+#         fig.savefig(tmpfile.name, format='PNG')
+#         tmp_img_path = tmpfile.name
+
+#     # Create PDF report
+#     pdf = FPDF()
+#     pdf.add_page()
+#     pdf.set_font("Arial", "B", 16)
+#     pdf.cell(0, 10, "Water Footprint Report", ln=True, align="C")
+
+#     pdf.set_font("Arial", size=12)
+#     pdf.ln(10)
+#     pdf.cell(0, 10, f"Weekly Water Consumption: {total_water:.2f} liters", ln=True)
+#     pdf.ln(5)
+#     pdf.cell(0, 10, f"Laundry (per week): {laundry_total:.2f} liters", ln=True)
+#     pdf.cell(0, 10, f"Dishwasher (per week): {dishes_total:.2f} liters", ln=True)
+#     pdf.cell(0, 10, f"Toilet visits (flush + handwashing): {toilet_total:.2f} liters", ln=True)
+#     pdf.cell(0, 10, f"Teeth brushing (per week): {teeth_total:.2f} liters", ln=True)
+#     pdf.cell(0, 10, f"Shower (per week): {shower_total:.2f} liters", ln=True)
+#     pdf.ln(10)
+
+#     pdf.image(tmp_img_path, x=30, w=170)
+#     pdf.ln(10)
+
+#     pdf.set_font("Arial", "B", 14)
+#     pdf.cell(0, 10, "Water Saving Tips:", ln=True)
+#     pdf.set_font("Arial", size=10)
+
+#     tips = [
+#         "Each toilet visit includes 6 liters for flushing and 3 liters for handwashing.",
+#         "Remember: Always turn off the tap while brushing your teeth!",
+#         "Shorter showers save water and energy. Aim for under 5 minutes!",
+#         "Laundry and dishwashers should be run only with full loads to save water.",
+#         "Thanks for caring about water conservation!"
+#     ]
+
+#     safe_width = 180
+#     for tip in tips:
+#         sentences = tip.split(". ")
+#         for sentence in sentences:
+#             sentence = sentence.strip()
+#             if not sentence.endswith(('.', '!', '?')):
+#                 sentence += '.'
+#             pdf.multi_cell(w=safe_width, h=8, txt=f"- {sentence}", align="L")
+#             pdf.ln(1)
+
+#     pdf.ln(10)
+#     pdf.cell(0, 10, "Thank you for using the Water Footprint Calculator!", ln=True)
+#     pdf.ln(10)
+#     pdf.set_font("Arial", "I", 10)
+#     pdf.cell(0, 10, "Developed by a freelance environmental engineer to raise awareness about water use and sustainability. © 2025", ln=True)
+
+#     from io import BytesIO 
+#     # pdf_output = io.BytesIO()
+#     # #pdf.output(pdf_output)
+#     # pdf.output(pdf_output, 'F')
+#     # pdf_output.seek(0)
+    
+#     pdf_output = io.BytesIO()
+#     # pdf_data = pdf.output(dest='S')  # PDF verisini string olarak al ve byte'lara çevir
+#     # pdf_output.write(pdf_data)  # BytesIO içine yaz
+#     # pdf_output.seek(0)
+    
+#     #pdf_bytes = pdf.output(dest='S')  # bytes olarak PDF içeriği al
+    
+#     pdf_bytes = pdf.output(dest='S')
+
+#     # Eğer çıktı str ise encode et, değilse olduğu gibi kullan
+#     if isinstance(pdf_bytes, str):
+#         pdf_bytes = pdf_bytes.encode('latin1')
+#     # else:
+#     #     pdf_bytes = pdf_data
+    
+#     pdf_output = io.BytesIO(pdf_bytes)
+#     pdf_output.seek(0)
+
+    
+#     # pdf_output = io.BytesIO(pdf_bytes)  # bytes'ı BytesIO'ya koy
+#     # pdf_output.seek(0)  # başa dön
+
+
+#     st.download_button(
+#         label="📄 Download PDF Report",
+#         data=pdf_output,
+#         file_name="water_footprint_report.pdf",
+#         mime="application/pdf"
+#     )
+
+# st.markdown("---")
+# st.markdown("Developed by a freelance environmental engineer to raise awareness about water use and sustainability. © 2025")
+# st.markdown("[☕ Buy me a coffee](https://www.buymeacoffee.com/yourprofile)")
+
+
+
+#trial for Streamlit cloud pdf
+
 import streamlit as st
 import matplotlib.pyplot as plt
 from fpdf import FPDF
@@ -3441,14 +3623,13 @@ toilet = st.number_input("Toilet uses per day", min_value=0, step=1, format="%d"
 if toilet > 0:
     st.markdown("🚽 *Each toilet flush uses approximately 6 liters of water.*")
     st.markdown("🧼 *And hopefully you're washing your hands too 😄 — each hand wash uses around 3 liters.*")
-    #st.markdown("🧮 *That’s 9 liters per toilet visit (flush + handwashing). Included in the total calculation.*")
 
 teeth_brush = st.number_input("Teeth brushing times per day", min_value=0, step=1, format="%d")
 if teeth_brush > 0:
     st.markdown("💬 *Don’t leave the tap running while brushing your teeth! (up to 6 liters/min wasted)*")
 
 shower_times = st.number_input("Showers per week", min_value=0, step=1, format="%d")
-shower_avg = st.number_input("Average shower duration (minutes)", min_value=0, step=1, format="%d")  # Tam sayı yapıldı
+shower_avg = st.number_input("Average shower duration (minutes)", min_value=0, step=1, format="%d")
 if shower_times > 0 and shower_avg > 0:
     st.markdown("💧 *Showers consume ~9 liters per minute on average.*")
 
@@ -3466,7 +3647,7 @@ if calculate_button:
     # Calculations
     laundry_total = laundry * laundry_per_load
     dishes_total = dishes * dishes_per_load
-    toilet_total = toilet * 7 * (toilet_per_use + handwash_per_use)  # Güncellendi
+    toilet_total = toilet * 7 * (toilet_per_use + handwash_per_use)
     teeth_total = teeth_brush * 7 * 2 * teeth_brush_per_minute
     shower_total = shower_times * shower_avg * shower_per_minute
 
@@ -3478,7 +3659,7 @@ if calculate_button:
     labels = ['Laundry', 'Dishwasher', 'Toilet visit (flush + handwashing)', 'Teeth brushing', 'Shower']
     values = [laundry_total, dishes_total, toilet_total, teeth_total, shower_total]
 
-    # Remove zero values for pie chart
+    # Filter zeros for pie chart
     filtered_labels = []
     filtered_values = []
     for lbl, val in zip(labels, values):
@@ -3498,12 +3679,12 @@ if calculate_button:
 
     st.pyplot(fig)
 
-    # Save plot image for PDF using a temporary file
+    # Save pie chart image
     with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmpfile:
         fig.savefig(tmpfile.name, format='PNG')
         tmp_img_path = tmpfile.name
 
-    # Create PDF report
+    # Create PDF
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", "B", 16)
@@ -3535,15 +3716,9 @@ if calculate_button:
         "Thanks for caring about water conservation!"
     ]
 
-    safe_width = 180
     for tip in tips:
-        sentences = tip.split(". ")
-        for sentence in sentences:
-            sentence = sentence.strip()
-            if not sentence.endswith(('.', '!', '?')):
-                sentence += '.'
-            pdf.multi_cell(w=safe_width, h=8, txt=f"- {sentence}", align="L")
-            pdf.ln(1)
+        pdf.multi_cell(w=180, h=8, txt=f"- {tip}", align="L")
+        pdf.ln(1)
 
     pdf.ln(10)
     pdf.cell(0, 10, "Thank you for using the Water Footprint Calculator!", ln=True)
@@ -3551,35 +3726,14 @@ if calculate_button:
     pdf.set_font("Arial", "I", 10)
     pdf.cell(0, 10, "Developed by a freelance environmental engineer to raise awareness about water use and sustainability. © 2025", ln=True)
 
-    from io import BytesIO 
-    # pdf_output = io.BytesIO()
-    # #pdf.output(pdf_output)
-    # pdf.output(pdf_output, 'F')
-    # pdf_output.seek(0)
-    
-    pdf_output = io.BytesIO()
-    # pdf_data = pdf.output(dest='S')  # PDF verisini string olarak al ve byte'lara çevir
-    # pdf_output.write(pdf_data)  # BytesIO içine yaz
-    # pdf_output.seek(0)
-    
-    #pdf_bytes = pdf.output(dest='S')  # bytes olarak PDF içeriği al
-    
-    pdf_bytes = pdf.output(dest='S')
-
-    # Eğer çıktı str ise encode et, değilse olduğu gibi kullan
+    # ---- PDF output to BytesIO ----
+    pdf_bytes = pdf.output(dest="S")
     if isinstance(pdf_bytes, str):
-        pdf_bytes = pdf_bytes.encode('latin1')
-    # else:
-    #     pdf_bytes = pdf_data
-    
+        pdf_bytes = pdf_bytes.encode("latin1")
     pdf_output = io.BytesIO(pdf_bytes)
     pdf_output.seek(0)
 
-    
-    # pdf_output = io.BytesIO(pdf_bytes)  # bytes'ı BytesIO'ya koy
-    # pdf_output.seek(0)  # başa dön
-
-
+    # Download button
     st.download_button(
         label="📄 Download PDF Report",
         data=pdf_output,
