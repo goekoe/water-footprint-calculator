@@ -3564,20 +3564,20 @@ if calculate_button:
     
     #pdf_bytes = pdf.output(dest='S')  # bytes olarak PDF içeriği al
     
-    pdf_data = pdf.output(dest='S')
+    pdf_bytes = pdf.output(dest='S')
 
     # Eğer çıktı str ise encode et, değilse olduğu gibi kullan
-    if isinstance(pdf_data, str):
-        pdf_bytes = pdf_data.encode('latin1')
-    else:
-        pdf_bytes = pdf_data
+    if isinstance(pdf_bytes, str):
+        pdf_bytes = pdf_bytes.encode('latin1')
+    # else:
+    #     pdf_bytes = pdf_data
     
     pdf_output = io.BytesIO(pdf_bytes)
     pdf_output.seek(0)
 
     
-    pdf_output = io.BytesIO(pdf_bytes)  # bytes'ı BytesIO'ya koy
-    pdf_output.seek(0)  # başa dön
+    # pdf_output = io.BytesIO(pdf_bytes)  # bytes'ı BytesIO'ya koy
+    # pdf_output.seek(0)  # başa dön
 
 
     st.download_button(
