@@ -3392,8 +3392,10 @@ if calculate_button:
     pdf.set_font("Arial", "I", 10)
     pdf.cell(0, 10, "Developed by a freelance environmental engineer to raise awareness about water use and sustainability. © 2025", ln=True)
 
+    from io import BytesIO 
     pdf_output = io.BytesIO()
-    pdf.output(pdf_output)
+    #pdf.output(pdf_output)
+    pdf.output(pdf_output, 'F')
     pdf_output.seek(0)
 
     st.download_button(
