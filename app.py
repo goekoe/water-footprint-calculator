@@ -3558,9 +3558,13 @@ if calculate_button:
     # pdf_output.seek(0)
     
     pdf_output = io.BytesIO()
-    pdf_data = pdf.output(dest='S')  # PDF verisini string olarak al ve byte'lara çevir
-    pdf_output.write(pdf_data)  # BytesIO içine yaz
-    pdf_output.seek(0)
+    # pdf_data = pdf.output(dest='S')  # PDF verisini string olarak al ve byte'lara çevir
+    # pdf_output.write(pdf_data)  # BytesIO içine yaz
+    # pdf_output.seek(0)
+    
+    pdf_bytes = pdf.output(dest='S')  # bytes olarak PDF içeriği al
+    pdf_output = io.BytesIO(pdf_bytes)  # bytes'ı BytesIO'ya koy
+    pdf_output.seek(0)  # başa dön
 
 
     st.download_button(
