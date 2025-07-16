@@ -3755,8 +3755,6 @@ if calculate_button:
         mime="application/pdf"
     )
 
-
-
 st.markdown("---")
 st.markdown("Developed by a freelance environmental engineer to raise awareness about water use and sustainability. © 2025")
 st.markdown("[☕ Buy me a coffee](https://www.buymeacoffee.com/yourprofile)")
