@@ -3593,7 +3593,7 @@ Created on Mon Jul  7 21:46:58 2025
 
 
 
-#trial for Streamlit cloud pdf
+#trial for Streamlit cloud pdf---CALISAN UYGULAMA (STREAMLIT+GITHUB)
 
 import streamlit as st
 import matplotlib.pyplot as plt
@@ -3604,6 +3604,20 @@ import tempfile
 st.set_page_config(page_title="Water Footprint Calculator", page_icon="💧", layout="centered")
 
 st.title("💧 Water Footprint Calculator")
+
+
+with st.expander("💧 What is Water Footprint?"):
+    st.markdown("""
+    The water footprint is an indicator of freshwater use that looks at both direct and indirect water use. 
+    It can help individuals and organizations understand the impact of their water consumption.
+
+    Types:
+    - **Blue Water**: surface and groundwater
+    - **Green Water**: rainwater stored in soil
+    - **Grey Water**: freshwater required to dilute pollutants
+
+    👉 You can use the calculator below to estimate your personal water footprint.
+    """)
 
 st.markdown("""
 Calculate your weekly water consumption based on daily activities.
@@ -3740,6 +3754,8 @@ if calculate_button:
         file_name="water_footprint_report.pdf",
         mime="application/pdf"
     )
+
+
 
 st.markdown("---")
 st.markdown("Developed by a freelance environmental engineer to raise awareness about water use and sustainability. © 2025")
